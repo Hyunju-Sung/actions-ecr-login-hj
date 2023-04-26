@@ -1,19 +1,20 @@
+# ecr-login/action.yml
 name: 'ecr-login'
-description: 'ecr-login'
+description: 'Log in to Amazon ECR using AWS GitHub Action role'
 
 inputs:
   aws-gh-action-role:
-    description: "AWS github action role arn"
+    description: "AWS GitHub Action role ARN"
     required: true
-  outputs:
-    registry:
-      description: "The URI of the ECR Private or ECR Public registry."
-      value: ${{ steps.login-ecr.outputs.registry }}
+
+outputs:
+  registry:
+    description: "The URI of the ECR Private or ECR Public registry."
+    value: ${{ env.ECR_REGISTRY }}
 
 runs:
   using: 'composite'
   steps:
-
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
@@ -23,3 +24,7 @@ runs:
     - name: Login to Amazon ECR Private
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
+
+    - name: set output
+      env:
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
