@@ -28,3 +28,5 @@ runs:
     - name: set output
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+      run: echo "ECR_REGISTRY=${{ env.ECR_REGISTRY }}" >> $GITHUB_ENV
+      shell: bash
