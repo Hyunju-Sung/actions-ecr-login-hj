@@ -1,5 +1,5 @@
-name: 'Build Docker Image'
-description: 'Build Docker Image'
+name: 'ecr-login'
+description: 'ecr-login'
 
 inputs:
   aws-gh-action-role:
@@ -9,7 +9,7 @@ inputs:
 runs:
   using: 'composite'
   steps:
-    
+
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
