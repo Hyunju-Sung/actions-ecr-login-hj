@@ -28,7 +28,7 @@ runs:
       uses: aws-actions/configure-aws-credentials@v1
       with:
         role-to-assume: ${{ inputs.aws-gh-action-role }}
-        aws-region: ${{ inputs.aws-gh-action-role }}
+        aws-region: ${{ inputs.aws-region }}
 
     - name: Login to Amazon ECR Private
       id: login-ecr
@@ -62,5 +62,5 @@ runs:
       with:
         workflow-job-name: $WORKFLOW_JOB_NAME
         workflow-job-status: $WORKFLOW_JOB_STATUS
-        slack_webhook_url: ${{ inputs.SLACK_WEBHOOK_URL }}
+        slack_webhook_url: ${{ inputs.slack_webhook_url }}
       if: ${{ failure() }}
