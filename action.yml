@@ -43,6 +43,7 @@ runs:
 
     - name: always_fail
       run: false
+      shell: bash
 
     #(admin) to-do
     - name: post github actions - save state
