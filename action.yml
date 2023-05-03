@@ -15,6 +15,10 @@ inputs:
   slack_webhook_url:
     description: "workflow job name calling"
     required: true
+  github-token:
+    description: "workflow job name calling"
+    required: true
+
 outputs:
   registry:
     description: "The URI of the ECR Private or ECR Public registry."
@@ -68,4 +72,5 @@ runs:
         trigger-delete-git-tag: true
         tag: 1.2.3.4
         slack_webhook_url: ${{ inputs.slack_webhook_url }}
+        github-token: ${{ inputs.github-token }}
       if: ${{ failure() }}
