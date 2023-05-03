@@ -25,7 +25,7 @@ runs:
       uses: aws-actions/configure-aws-credentials@v1
       with:
         role-to-assume: ${{ inputs.aws-gh-action-role }}
-        aws-region: ${{ inputs.aws-region }}
+        aws-region: 'ap-northeast-7'
 
     - name: Login to Amazon ECR Private
       id: login-ecr
