@@ -57,6 +57,13 @@ runs:
         echo "WORKFLOW_JOB_STATUS=$WORKFLOW_JOB_STATUS" >> $GITHUB_ENV
       shell: bash
 
+    - name: Use environment variables
+      run: |
+        echo "Workflow job name: $WORKFLOW_JOB_NAME"
+        echo "Workflow job status: $WORKFLOW_JOB_STATUS"
+      shell: bash
+
+
     - name: post github actions
       uses: Hyunju-Sung/actions-post-deploy-hj@0.0.4
       with:
