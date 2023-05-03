@@ -46,7 +46,7 @@ runs:
       run: false
       shell: bash
 
-    #(admin) to-do
+    #(admin) to-do : change if statement
     - name: post github actions - save state
       id: save_state
       run: |
@@ -59,11 +59,13 @@ runs:
         echo "::set-output name=workflow_job_status::$WORKFLOW_JOB_STATUS"
       shell: bash
       if: ${{ always() }}
-    
+
     - name: post github actions
       uses: Hyunju-Sung/actions-post-deploy-hj@0.0.4
       with:
         workflow-job-name: ${{ steps.save_state.outputs.workflow_job_name }}
         workflow-job-status: ${{ steps.save_state.outputs.workflow_job_status }}
+        trigger-delete-git-tag: true
+        tag: 1.2.3.4
         slack_webhook_url: ${{ inputs.slack_webhook_url }}
       if: ${{ failure() }}
