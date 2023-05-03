@@ -3,15 +3,9 @@ name: 'ecr-login'
 description: 'Log in to Amazon ECR using AWS GitHub Action role'
 
 inputs:
-  aws-gh-action-role:
-    description: "AWS GitHub Action role ARN"
-    required: true
   aws-region:
     description: 'aws-region'
     default: 'ap-northeast-2'
-  workflow-job-name:
-    description: "workflow job name calling"
-    required: true
 
 outputs:
   registry:
@@ -25,7 +19,7 @@ runs:
       id: configure-aws-credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
-        role-to-assume: ${{ inputs.aws-gh-action-role }}
+        role-to-assume: ${{ env.aws-gh-action-role }}
         aws-region: ${{ inputs.aws-region }}
 
     - name: Login to Amazon ECR Private
