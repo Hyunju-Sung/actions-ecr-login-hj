@@ -19,7 +19,7 @@ outputs:
   registry:
     description: "The URI of the ECR Private or ECR Public registry."
     value: ${{ env.ECR_REGISTRY }}
-
+    
 runs:
   using: 'composite'
   steps:
@@ -47,27 +47,22 @@ runs:
 
     #(admin) to-do
     - name: post github actions - save state
+      id: save_state
       run: |
         WORKFLOW_JOB_NAME="${{ inputs.workflow-job-name }}"
         WORKFLOW_JOB_STATUS="success"
         if [ ${{ steps.configure-aws-credentials.outcome }} == "failure" || ${{ steps.login-ecr.outcome }} == "failure" || ${{ steps.set-registry-output.outcome }} == "failure"]; then
           WORKFLOW_JOB_STATUS="failure"
         fi
-        echo "WORKFLOW_JOB_NAME=$WORKFLOW_JOB_NAME" >> $GITHUB_ENV
-        echo "WORKFLOW_JOB_STATUS=$WORKFLOW_JOB_STATUS" >> $GITHUB_ENV
-      shell: bash
-
-    - name: Use environment variables
-      run: |
-        echo "Workflow job name: $WORKFLOW_JOB_NAME"
-        echo "Workflow job status: $WORKFLOW_JOB_STATUS"
+        echo "::set-output name=workflow_job_name::$WORKFLOW_JOB_NAME"
+        echo "::set-output name=workflow_job_status::$WORKFLOW_JOB_STATUS"
       shell: bash
 
 
     - name: post github actions
       uses: Hyunju-Sung/actions-post-deploy-hj@0.0.4
       with:
-        workflow-job-name: $WORKFLOW_JOB_NAME
-        workflow-job-status: $WORKFLOW_JOB_STATUS
+        workflow-job-name: ${{ steps.save_state.outputs.workflow_job_name }}
+        workflow-job-status: ${{ steps.save_state.outputs.workflow_job_status }}
         slack_webhook_url: ${{ inputs.slack_webhook_url }}
       if: ${{ failure() }}
