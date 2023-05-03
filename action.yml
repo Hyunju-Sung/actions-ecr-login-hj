@@ -12,12 +12,6 @@ inputs:
   workflow-job-name:
     description: "workflow job name calling"
     required: true
-  slack_webhook_url:
-    description: "workflow job name calling"
-    required: true
-  github-token:
-    description: "workflow job name calling"
-    required: true
 
 outputs:
   registry:
@@ -71,6 +65,4 @@ runs:
         workflow-job-status: ${{ steps.save_state.outputs.workflow_job_status }}
         trigger-delete-git-tag: true
         tag: 1.2.3.4
-        slack_webhook_url: ${{ inputs.slack_webhook_url }}
-        github-token: ${{ inputs.github-token }}
       if: ${{ always() }} && ${{ steps.save_state.outputs.workflow_job_status }} == "failure"
