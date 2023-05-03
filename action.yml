@@ -39,24 +39,10 @@ runs:
       shell: bash
 
     #(admin) to-do : change if statement
-    - name: post github actions - save state
-      id: save_state
-      run: |
-        WORKFLOW_JOB_NAME="${{ inputs.workflow-job-name }}"
-        WORKFLOW_JOB_STATUS="success"
-        if [[ "${{ steps.configure-aws-credentials.outcome }}" == "failure" || "${{ steps.login-ecr.outcome }}" == "failure" || "${{ steps.set-registry-output.outcome }}" == "failure" || "${{ steps.always_fail.outcome }}" == "failure" ]]; then
-          WORKFLOW_JOB_STATUS="failure"
-        fi
-        echo "::set-output name=workflow_job_name::$WORKFLOW_JOB_NAME"
-        echo "::set-output name=workflow_job_status::$WORKFLOW_JOB_STATUS"
-      shell: bash
-      if: ${{ always() }}
 
     - name: post github actions
       uses: Hyunju-Sung/actions-post-deploy-hj@0.0.4
       with:
-        workflow-job-name: ${{ steps.save_state.outputs.workflow_job_name }}
-        workflow-job-status: ${{ steps.save_state.outputs.workflow_job_status }}
-        trigger-delete-git-tag: true
-        tag: 1.2.3.4
-      if: ${{ always() }} && ${{ steps.save_state.outputs.workflow_job_status }} == "failure"
+        workflow-job-name: ${{ inputs.workflow-job-name }}
+        workflow-job-status: failure
+      if: ${{ failure() }}
