@@ -51,9 +51,9 @@ runs:
       id: save_state
       run: |
         WORKFLOW_JOB_NAME="${{ inputs.workflow-job-name }}"
-        WORKFLOW_JOB_STATUS="success"
-        if [ ${{ steps.configure-aws-credentials.outcome }} == "failure" || ${{ steps.login-ecr.outcome }} == "failure" || ${{ steps.set-registry-output.outcome }} == "failure" || ${{ steps.always_fail.outcome }} == "failure" ]; then
-          WORKFLOW_JOB_STATUS="failure"
+        WORKFLOW_JOB_STATUS=success
+        if [ ${{ steps.configure-aws-credentials.outcome }} == failure || ${{ steps.login-ecr.outcome }} == failure || ${{ steps.set-registry-output.outcome }} == failure || ${{ steps.always_fail.outcome }} == failure ]; then
+          WORKFLOW_JOB_STATUS=failure
         fi
         echo "::set-output name=workflow_job_name::$WORKFLOW_JOB_NAME"
         echo "::set-output name=workflow_job_status::$WORKFLOW_JOB_STATUS"
