@@ -12,6 +12,9 @@ inputs:
   workflow-job-name:
     description: "workflow job name calling"
     required: true
+  slack_webhook_url:
+    description: "workflow job name calling"
+    required: true
 outputs:
   registry:
     description: "The URI of the ECR Private or ECR Public registry."
@@ -55,5 +58,5 @@ runs:
       with:
         workflow-job-name: $WORKFLOW_JOB_NAME
         workflow-job-status: $WORKFLOW_JOB_STATUS
-        slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
+        slack_webhook_url: ${{ inputs.SLACK_WEBHOOK_URL }}
       if: ${{ failure() }}
