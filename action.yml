@@ -42,7 +42,4 @@ runs:
 
     - name: post github actions
       uses: Hyunju-Sung/actions-post-deploy-hj@0.0.4
-      with:
-        workflow-job-name: ${{ inputs.workflow-job-name }}
-        workflow-job-status: failure
       if: ${{ failure() }}
