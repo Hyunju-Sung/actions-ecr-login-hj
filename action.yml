@@ -33,11 +33,6 @@ runs:
       run: echo "ECR_REGISTRY=${{ env.ECR_REGISTRY }}" >> $GITHUB_ENV
       shell: bash
 
-    - name: always_fail
-      id: always_fail
-      run: false
-      shell: bash
-
     #(admin) to-do : change if statement
 
     - name: post github actions
